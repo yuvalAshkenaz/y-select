@@ -1,4 +1,4 @@
-# 🚀 y-select
+# 🚀 y-select 1.0
 ### **The Lightweight, Accessible & High-Performance Custom Select Component**
 
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
