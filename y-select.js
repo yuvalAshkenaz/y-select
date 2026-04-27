@@ -6,17 +6,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const selects = document.querySelectorAll('select.y-select');
 
     selects.forEach(select => {
-        // מניעת עטיפה כפולה במקרה של הרצה חוזרת של הסקריפט
         if (select.parentElement.classList.contains('y-select-wrap')) return;
 
-        // יצירת העוטף דינמית
+        // בדיקה אם קיים לייבל של y-cf7-labels מיד אחרי השדה
+        const nextEl = select.nextElementSibling;
+        const labelEl = (nextEl && nextEl.classList.contains('inputs-label')) ? nextEl : null;
+
         const wrapper = document.createElement('span');
         wrapper.className = 'y-select-wrap';
         
-        // הכנסת העוטף ל-DOM בדיוק לפני ה-select המקורי
         select.parentNode.insertBefore(wrapper, select);
-        
-        // העברת ה-select לתוך העוטף החדש
         wrapper.appendChild(select);
 
         const display = document.createElement('span');
@@ -28,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         display.setAttribute('role', 'combobox');
         display.setAttribute('aria-expanded', 'false');
         display.setAttribute('aria-haspopup', 'listbox');
+        // השארנו את התצוגה הרגילה של הטקסט:
         display.textContent = select.options[select.selectedIndex].text;
         
         list.className = 'y-select-list';
@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function confirmSelection(index) {
             select.selectedIndex = index;
+            // השארנו את התצוגה הרגילה של הטקסט:
             display.textContent = select.options[index].text;
             const items = list.querySelectorAll('.y-select-item');
             items.forEach((it, i) => {
@@ -65,7 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 it.classList.toggle('is-highlighted', i === index);
             });
             highlightedIndex = index;
-            // גלילה אוטומטית אם הרשימה ארוכה
             items[index].scrollIntoView({ block: 'nearest' });
         }
 
@@ -87,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         display.addEventListener('keydown', (e) => {
             const items = list.querySelectorAll('.y-select-item');
-            
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 if (wrapper.classList.contains('is-open')) {
@@ -109,18 +108,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     const prev = Math.max(highlightedIndex - 1, 0);
                     highlightItem(prev);
                 }
-            } else if (e.key === 'Escape') {
-                closeDropdown();
-            } else if (e.key === 'Tab' && wrapper.classList.contains('is-open')) {
+            } else if (e.key === 'Escape' || (e.key === 'Tab' && wrapper.classList.contains('is-open'))) {
                 closeDropdown();
             }
         });
+
+        // טיפול בפוקוס לטובת הלייבלים המרחפים
+        display.addEventListener('focus', () => wrapper.classList.add('has-focus'));
+        display.addEventListener('blur', () => wrapper.classList.remove('has-focus'));
 
         select.style.display = 'none';
         display.addEventListener('click', toggleDropdown);
         
         wrapper.appendChild(display);
         wrapper.appendChild(list);
+
+        // גורר את הלייבל פנימה לעוטף (אם קיים)
+        if (labelEl) {
+            wrapper.appendChild(labelEl);
+        }
     });
 
     function closeAllSelects() {
