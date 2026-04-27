@@ -1,4 +1,4 @@
-# 🚀 y-select 1.0
+# 🚀 y-select 2.0
 ### **The Lightweight, Accessible & High-Performance Custom Select Component**
 
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
@@ -34,17 +34,15 @@ Experience the component's performance and accessibility:
 ## 📦 Installation & Usage
 
 ### 1. HTML Structure
-Simply wrap your native `select` with a `.y-select-wrap` container.
+Simply add to your your native `select` a class `.y-select`.
 
 ```html
-<div class="y-select-wrap">
-    <select class="y-select" name="category">
-        <option value="">Choose Category</option>
-        <option value="tech">Technology</option>
-        <option value="finance">Finance</option>
-        <option value="legal">Legal Affairs</option>
-    </select>
-</div>
+<select class="y-select" name="category">
+    <option value="">Choose Category</option>
+    <option value="tech">Technology</option>
+    <option value="finance">Finance</option>
+    <option value="legal">Legal Affairs</option>
+</select>
 ```
 
 ### 2. Styling (CSS)
