@@ -1,4 +1,4 @@
-/*! y-validate - v1.0 - 05/02/2026
+/*! y-select - v2.0 - 27/04/2026
 * By Yuval Ashkenazi
 * https://github.com/yuvalAshkenaz/y-select */
 
@@ -6,9 +6,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const selects = document.querySelectorAll('select.y-select');
 
     selects.forEach(select => {
-        const wrapper = select.parentElement;
-        const display = document.createElement('div');
-        const list = document.createElement('div');
+        // מניעת עטיפה כפולה במקרה של הרצה חוזרת של הסקריפט
+        if (select.parentElement.classList.contains('y-select-wrap')) return;
+
+        // יצירת העוטף דינמית
+        const wrapper = document.createElement('span');
+        wrapper.className = 'y-select-wrap';
+        
+        // הכנסת העוטף ל-DOM בדיוק לפני ה-select המקורי
+        select.parentNode.insertBefore(wrapper, select);
+        
+        // העברת ה-select לתוך העוטף החדש
+        wrapper.appendChild(select);
+
+        const display = document.createElement('span');
+        const list = document.createElement('span');
         let highlightedIndex = select.selectedIndex;
 
         display.className = 'y-select-display';
@@ -22,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         list.setAttribute('role', 'listbox');
 
         Array.from(select.options).forEach((option, index) => {
-            const item = document.createElement('div');
+            const item = document.createElement('span');
             item.className = 'y-select-item';
             item.setAttribute('role', 'option');
             item.setAttribute('aria-selected', index === select.selectedIndex ? 'true' : 'false');
@@ -106,6 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         select.style.display = 'none';
         display.addEventListener('click', toggleDropdown);
+        
         wrapper.appendChild(display);
         wrapper.appendChild(list);
     });
