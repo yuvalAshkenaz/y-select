@@ -1,4 +1,4 @@
-/*! y-select - v2.0 - 27/04/2026
+/*! y-select - v2.1 - 04/05/2026
 * By Yuval Ashkenazi
 * https://github.com/yuvalAshkenaz/y-select */
 
