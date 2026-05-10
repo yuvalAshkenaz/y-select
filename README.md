@@ -27,7 +27,7 @@ Unlike heavy libraries like Select2 or jQuery-based plugins, `y-select` focuses 
 
 ## 🚀 Live Demo
 Experience the component's performance and accessibility:  
-👉 [**View Live Demo**](https://test.dooble.io/y-select/demo)
+👉 [**View Live Demo**](https://y-tools.dooble.us/y-select/demo.html)
 
 ---
 
